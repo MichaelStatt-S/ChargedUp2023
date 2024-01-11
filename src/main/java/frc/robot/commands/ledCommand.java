@@ -300,12 +300,8 @@ public class ledCommand extends CommandBase {
       sub.setData();
     }
 
-<<<<<<< Updated upstream
-    if (intake.getTilt() == Value.kReverse) {
-=======
     // i have no idea
-    if (intake.getMechanismTilt() == Value.kReverse) {
->>>>>>> Stashed changes
+    if (intake.getTilt() == Value.kReverse) {
       timer.start();
       if (timer.hasElapsed(0.5)) {
         if (on) {

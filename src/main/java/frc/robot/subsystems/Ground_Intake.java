@@ -74,7 +74,7 @@ public class Ground_Intake extends SubsystemBase {
 		tiltSolenoid.set(Value.kForward);
 	}
 
-	public Value getMechanismTilt(){
+	public Value getTilt(){
 		return tiltSolenoid.get();
 	}
 	
