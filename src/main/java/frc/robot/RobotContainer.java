@@ -60,9 +60,9 @@ public class RobotContainer {
         
         /* Driver Buttons */
         private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
-        private final JoystickButton outtakeButton = new JoystickButton(codriver, XboxController.Button.kB.value);
-        private final JoystickButton retractButton = new JoystickButton(codriver, XboxController.Button.kA.value);
-        private final JoystickButton intakeButton = new JoystickButton(codriver, XboxController.Button.kX.value);
+        private final JoystickButton outtakeButton = new JoystickButton(codriver, XboxController.Button.kB.value); //2
+        private final JoystickButton retractButton = new JoystickButton(codriver, XboxController.Button.kA.value); //1
+        private final JoystickButton intakeButton = new JoystickButton(codriver, XboxController.Button.kX.value); //3
         private final JoystickButton lowButton = new JoystickButton(codriver, XboxController.Button.kLeftBumper.value);
         private final JoystickButton coneButton = new JoystickButton(codriver,
                         XboxController.Button.kRightBumper.value);
@@ -70,7 +70,7 @@ public class RobotContainer {
                         XboxController.Button.kRightBumper.value);
         private final JoystickButton passiveBalanceButton = new JoystickButton(driver,
                         XboxController.Button.kLeftBumper.value);
-        private final JoystickButton intakeFullButton = new JoystickButton(codriver, XboxController.Button.kY.value);
+        private final JoystickButton intakeFullButton = new JoystickButton(codriver, XboxController.Button.kY.value); //4
         private final JoystickButton robotCentric = new JoystickButton(driver,
                         XboxController.Button.kRightBumper.value);
 

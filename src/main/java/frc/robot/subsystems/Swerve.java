@@ -34,7 +34,7 @@ public class Swerve extends SubsystemBase {
 
   private Field2d field;
   Accelerometer accelerometer;
-
+  
   public Swerve(Pigeon2 gyro) {
     accelerometer = new BuiltInAccelerometer();
     this.gyro = gyro;
@@ -205,9 +205,9 @@ public class Swerve extends SubsystemBase {
         ? Rotation2d.fromDegrees(360 - gyro.getYaw())
         : Rotation2d.fromDegrees(gyro.getYaw());
   }
-
   @Override
   public void periodic() {
+  
     swerveOdometry.update(getYaw(), getModulePositions());
     field.setRobotPose(getPose());
     SmartDashboard.putNumber("Robot Pose X", getPose().getX());
