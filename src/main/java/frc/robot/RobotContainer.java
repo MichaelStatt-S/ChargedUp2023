@@ -103,6 +103,9 @@ public class RobotContainer {
         /* SendableChooser */
         public final SendableChooser<Command> autoChooser;
 
+        //  private final VisionSubsytem visionSubsytem = new VisionSubsytem();
+        
+
         /**
          * The container for the robot. Contains subsystems, OI devices, and commands.
          */
@@ -124,6 +127,8 @@ public class RobotContainer {
                 SmartDashboard.putNumber("Speed Multipler", SPEED_MULTIPLIER);
 
                 ledsub.setDefaultCommand(ledcommand);
+
+                // visionSubsytem.setDefaultCommand(new AddVisionPose(visionSubsytem,s_Swerve));
                 
                 autoChooser = AutoBuilder.buildAutoChooser("New Auto");
 

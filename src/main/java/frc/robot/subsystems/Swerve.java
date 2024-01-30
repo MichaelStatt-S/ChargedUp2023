@@ -6,6 +6,7 @@ import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -33,7 +34,7 @@ In the periodic() method, the robot's odometry is updated, and the yaw of the ro
 public class Swerve extends SubsystemBase {
   private Pigeon2 gyro;
 
-  private SwerveDriveOdometry swerveOdometry;
+  private SwerveDrivePoseEstimator swerveOdometry;
   private SwerveModule[] mSwerveMods;
 
   private Field2d field;
@@ -52,7 +53,9 @@ public class Swerve extends SubsystemBase {
         new SwerveModule(2, Constants.Swerve.Mod2.constants),
         new SwerveModule(3, Constants.Swerve.Mod3.constants)
     };
-    swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getModulePositions());
+    swerveOdometry = new SwerveDrivePoseEstimator(Constants.Swerve.swerveKinematics, getYaw(),
+    getModulePositions(), Constants.Swerve.INITIAL_POSE, Constants.Swerve.stateStdDevs,
+    Constants.Swerve.visionStdDevs);
 
     field = new Field2d();
     SmartDashboard.putData(field);
@@ -183,7 +186,7 @@ public class Swerve extends SubsystemBase {
    * @return The pose of the robot in meters.
    */
   public Pose2d getPose() {
-    return swerveOdometry.getPoseMeters();
+    return swerveOdometry.getEstimatedPosition();
   }
 
   /**
@@ -259,6 +262,13 @@ public class Swerve extends SubsystemBase {
         ? Rotation2d.fromDegrees(360 - gyro.getYaw().getValue())
         : Rotation2d.fromDegrees(gyro.getYaw().getValue());
   }
+  public Pose2d addVisionMeasurement(Pose2d measurment, double timeStamp) {
+    swerveOdometry.addVisionMeasurement(measurment, timeStamp);
+    SmartDashboard.putNumber("vision added x", measurment.getX());
+    SmartDashboard.putNumber("vision added y", measurment.getY());
+
+    return swerveOdometry.getEstimatedPosition();
+}
 
   @Override
   public void periodic() {

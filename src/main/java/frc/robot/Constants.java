@@ -2,18 +2,48 @@ package frc.robot;
 
 import com.revrobotics.CANSparkBase.IdleMode;
 
+import edu.wpi.first.apriltag.AprilTagFields;
+import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
 import frc.lib.config.SwerveModuleConstants;
 
 public final class Constants {
+  public static final class VisionConstants {
+    public static final String CAMERA_NAME = "defaultCamera";
+    // TODO: change me
+    public static final Transform3d ROBOT_TO_CAM = new Transform3d(new Translation3d(0.5, 0.0, 0.5),
+        new Rotation3d(0, 0, 0)); // Cam mounted facing forward, half a meter forward of center, half a meter up
+                                  // from center.
+    public static final String FIELD_LAYOUT_RESOURCE_FILE = AprilTagFields.k2024Crescendo.m_resourceFile;
+  }
 
   public static final class Swerve {
+
+    // TODO: change me
+    public static final Pose2d INITIAL_POSE = new Pose2d(0, 0, new Rotation2d(0));
+
+    // Standard deviations of the pose estimate (x position in meters, y position
+    // in meters, and heading in radians). Increase these numbers to trust your
+    // state estimate
+    // less.
+    public static final Matrix<N3, N1> stateStdDevs = VecBuilder.fill(10, 10, Units.degreesToRadians(5));
+
+    // Standard deviations of the vision pose measurement (x position
+    // in meters, y position in meters, and heading in radians). Increase these
+    // numbers to trust
+    // the vision pose measurement less.
+    public static final Matrix<N3, N1> visionStdDevs = VecBuilder.fill(0.5, 0.5, Units.degreesToRadians(30));
+
     public static final double stickDeadband = 0.1;
     public static final int pigeonID = 13;
     public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
@@ -90,7 +120,7 @@ public final class Constants {
       public static final int canCoderID = 12;
 
       public static final boolean driveInvert = false;
-      public static final double offsetDegree = -133+180;
+      public static final double offsetDegree = -133 + 180;
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(offsetDegree);
       public static final Rotation2d balanceOffset = Rotation2d.fromDegrees(offsetDegree + 45);
       public static final double conversionFactor = 0.060509807;
@@ -159,17 +189,6 @@ public final class Constants {
     public static final double kPXController = 1;
     public static final double kPYController = 1;
     public static final double kPThetaController = 1;
-  }
-
-  public static final class VisionConstants {
-    public static final String USB_CAMERA_NAME = "photonvision";
-    public static final double TRACKED_TAG_ROATION_KP = 0;
-    public static final Transform3d CAMERA_TO_ROBOT = new Transform3d(new Translation3d(-0.3425, 0.0, -0.233),
-        new Rotation3d());
-    public static final Transform3d ROBOT_TO_CAMERA = CAMERA_TO_ROBOT.inverse();
-    public static final int TAG_TO_CHASE = 1;
-    public static double aimingSpeed;
-
   }
 
   // public static final int[] GROUND_INTAKE_PORTS = {0, 0};
